@@ -17,8 +17,10 @@ proj.android/obj/
 local.properties
 
 # Eclipse project files
-.classpath
-.project
+proj.android/.classpath
+proj.android/.project
+proj.android/.cproject
+proj.android/.settings
 
 *.o
 *.o.d
