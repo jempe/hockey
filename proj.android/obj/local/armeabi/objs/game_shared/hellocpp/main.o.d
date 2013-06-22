@@ -7,10 +7,10 @@ obj/local/armeabi/objs/game_shared/hellocpp/main.o: jni/hellocpp/main.cpp \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/CCPlatformConfig.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/CCPlatformConfig.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/android/CCPlatformDefine.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/android/log.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/android/log.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/CCApplicationProtocol.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/android/jni/JniHelper.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/jni.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/jni.h \
  /home/sucio/bin/android-ndk-r8e/sources/cxx-stl/gnu-libstdc++/4.6/include/string \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/CCPlatformMacros.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/include/cocos2d.h \
@@ -23,26 +23,26 @@ obj/local/armeabi/objs/game_shared/hellocpp/main.o: jni/hellocpp/main.cpp \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/base_nodes/CCNode.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/include/ccMacros.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/android/CCStdC.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/math.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/stdlib.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/alloca.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/strings.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/memory.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/math.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/stdlib.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/alloca.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/strings.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/memory.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/cocoa/CCAffineTransform.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/cocoa/CCGeometry.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/cocoa/CCArray.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/support/data_support/ccCArray.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/android/CCGL.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/GLES2/gl2platform.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/KHR/khrplatform.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/GLES2/gl2.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/GLES2/gl2ext.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/GLES2/gl2platform.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/KHR/khrplatform.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/GLES2/gl2.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/GLES2/gl2ext.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/shaders/ccGLStateCache.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/shaders/CCGLProgram.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/kazmath/include/kazmath/kazmath.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/kazmath/include/kazmath/vec2.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/kazmath/include/kazmath/vec3.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/assert.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/assert.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/kazmath/include/kazmath/mat3.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/kazmath/include/kazmath/utility.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/kazmath/include/kazmath/mat4.h \
@@ -68,7 +68,7 @@ obj/local/armeabi/objs/game_shared/hellocpp/main.o: jni/hellocpp/main.cpp \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/sprite_nodes/CCAnimation.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/cocoa/CCDictionary.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/support/data_support/uthash.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/inttypes.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/inttypes.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/cocoa/CCArray.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/cocoa/CCString.h \
  /home/sucio/bin/android-ndk-r8e/sources/cxx-stl/gnu-libstdc++/4.6/include/functional \
@@ -219,13 +219,13 @@ jni/../../Classes/AppDelegate.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/android/CCPlatformDefine.h:
 
-/home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/android/log.h:
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/android/log.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/CCApplicationProtocol.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/android/jni/JniHelper.h:
 
-/home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/jni.h:
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/jni.h:
 
 /home/sucio/bin/android-ndk-r8e/sources/cxx-stl/gnu-libstdc++/4.6/include/string:
 
@@ -251,15 +251,15 @@ jni/../../Classes/AppDelegate.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/android/CCStdC.h:
 
-/home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/math.h:
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/math.h:
 
-/home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/stdlib.h:
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/stdlib.h:
 
-/home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/alloca.h:
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/alloca.h:
 
-/home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/strings.h:
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/strings.h:
 
-/home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/memory.h:
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/memory.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/cocoa/CCAffineTransform.h:
 
@@ -271,13 +271,13 @@ jni/../../Classes/AppDelegate.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/android/CCGL.h:
 
-/home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/GLES2/gl2platform.h:
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/GLES2/gl2platform.h:
 
-/home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/KHR/khrplatform.h:
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/KHR/khrplatform.h:
 
-/home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/GLES2/gl2.h:
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/GLES2/gl2.h:
 
-/home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/GLES2/gl2ext.h:
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/GLES2/gl2ext.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/shaders/ccGLStateCache.h:
 
@@ -289,7 +289,7 @@ jni/../../Classes/AppDelegate.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/kazmath/include/kazmath/vec3.h:
 
-/home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/assert.h:
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/assert.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/kazmath/include/kazmath/mat3.h:
 
@@ -341,7 +341,7 @@ jni/../../Classes/AppDelegate.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/support/data_support/uthash.h:
 
-/home/sucio/bin/android-ndk-r8e/platforms/android-9/arch-arm/usr/include/inttypes.h:
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/inttypes.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/cocoa/CCArray.h:
 

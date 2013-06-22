@@ -9,6 +9,15 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/AppDelegate.o: \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/android/CCPlatformDefine.h \
  /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/android/log.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/CCApplicationProtocol.h \
+ /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../CocosDenshion/android/../include/SimpleAudioEngine.h \
+ /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../CocosDenshion/android/../include/Export.h \
+ /home/sucio/bin/android-ndk-r8e/sources/cxx-stl/gnu-libstdc++/4.6/include/typeinfo \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/ctype.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/sys/cdefs.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/android/api-level.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/string.h \
+ /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/malloc.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/include/cocos2d.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/include/ccConfig.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/actions/CCAction.h \
@@ -21,9 +30,6 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/AppDelegate.o: \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/include/ccMacros.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/android/CCStdC.h \
  /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/math.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/sys/cdefs.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/sys/cdefs_elf.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/android/api-level.h \
  /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/sys/types.h \
  /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/stdint.h \
  /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/sys/_types.h \
@@ -43,8 +49,6 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/AppDelegate.o: \
  /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/machine/limits.h \
  /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/sys/syslimits.h \
  /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/asm/page.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/string.h \
- /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/malloc.h \
  /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/stdio.h \
  /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/stdlib.h \
  /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/alloca.h \
@@ -111,7 +115,6 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/AppDelegate.o: \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/actions/CCActionGrid.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/actions/CCActionInstant.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/include/ccTypeInfo.h \
- /home/sucio/bin/android-ndk-r8e/sources/cxx-stl/gnu-libstdc++/4.6/include/typeinfo \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/actions/CCActionGrid.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/actions/CCActionProgressTimer.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/actions/CCActionGrid3D.h \
@@ -230,7 +233,7 @@ obj/local/armeabi/objs/game_shared/__/__/Classes/AppDelegate.o: \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/touch_dispatcher/CCTouchDispatcher.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/CCScheduler.h \
  /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/support/data_support/uthash.h \
- jni/../../Classes/HelloWorldScene.h
+ jni/../../Classes/HockeyScene.h jni/../../Classes/VectorSprite.h
 
 jni/../../Classes/AppDelegate.h:
 
@@ -251,6 +254,24 @@ jni/../../Classes/AppDelegate.h:
 /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/android/log.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/CCApplicationProtocol.h:
+
+/home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../CocosDenshion/android/../include/SimpleAudioEngine.h:
+
+/home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../CocosDenshion/android/../include/Export.h:
+
+/home/sucio/bin/android-ndk-r8e/sources/cxx-stl/gnu-libstdc++/4.6/include/typeinfo:
+
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/ctype.h:
+
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/sys/cdefs.h:
+
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/sys/cdefs_elf.h:
+
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/android/api-level.h:
+
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/string.h:
+
+/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/malloc.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/include/cocos2d.h:
 
@@ -275,12 +296,6 @@ jni/../../Classes/AppDelegate.h:
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/platform/android/CCStdC.h:
 
 /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/math.h:
-
-/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/sys/cdefs.h:
-
-/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/sys/cdefs_elf.h:
-
-/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/android/api-level.h:
 
 /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/sys/types.h:
 
@@ -319,10 +334,6 @@ jni/../../Classes/AppDelegate.h:
 /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/sys/syslimits.h:
 
 /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/asm/page.h:
-
-/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/string.h:
-
-/home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/malloc.h:
 
 /home/sucio/bin/android-ndk-r8e/platforms/android-8/arch-arm/usr/include/stdio.h:
 
@@ -455,8 +466,6 @@ jni/../../Classes/AppDelegate.h:
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/actions/CCActionInstant.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/include/ccTypeInfo.h:
-
-/home/sucio/bin/android-ndk-r8e/sources/cxx-stl/gnu-libstdc++/4.6/include/typeinfo:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/actions/CCActionGrid.h:
 
@@ -694,4 +703,6 @@ jni/../../Classes/AppDelegate.h:
 
 /home/sucio/bin/cocos2dx2.1/Hockey/proj.android/../../cocos2dx/support/data_support/uthash.h:
 
-jni/../../Classes/HelloWorldScene.h:
+jni/../../Classes/HockeyScene.h:
+
+jni/../../Classes/VectorSprite.h:

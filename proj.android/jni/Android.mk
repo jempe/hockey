@@ -4,11 +4,14 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := game_shared
 
+LOCAL_CFLAGS += -DCOCOS2D_DEBUG=1
+
 LOCAL_MODULE_FILENAME := libgame
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
-                   ../../Classes/HelloWorldScene.cpp
+                   ../../Classes/VectorSprite.cpp \
+                   ../../Classes/HockeyScene.cpp
                    
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes                   
 
