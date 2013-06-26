@@ -42,6 +42,6 @@ void VectorSprite::setPosition(const CCPoint& pos)
 
 float VectorSprite::get_radius()
 {
-	return getTexture()->getContentSize().width * 0.5f;
+	return getTexture()->getContentSize().width * 0.43f;
 }
 

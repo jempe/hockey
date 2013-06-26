@@ -17,6 +17,13 @@ class HockeyScene : public cocos2d::CCLayerColor
 
 	CCSize _screenSize;
 
+	CCSprite * _table_bottom_right;
+	CCSprite * _table_left;
+
+	bool _gamePaused;
+
+	float _friction;
+
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();  
@@ -34,7 +41,11 @@ public:
 
     void update(float dt);
 
-    void ccTouchesBegan(CCset * touches, CCEvent * event);
+    virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
+
+    virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
+
+    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

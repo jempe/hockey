@@ -20,7 +20,7 @@ public:
 
 	CC_SYNTHESIZE(CCPoint, _nextPos, NextPos);
 	CC_SYNTHESIZE(CCPoint, _vector, Vector);
-	CC_SYNTHESIZE(CCTouch, _touch, Touch);
+	CC_SYNTHESIZE(CCTouch*, _touch, Touch);
 
 	static VectorSprite* vectorSpriteWithFile(const char* fileName);
 
