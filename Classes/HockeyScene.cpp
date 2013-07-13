@@ -25,6 +25,8 @@ bool HockeyScene::init()
 	_gamePaused = false;
 	_playersNumber = 2;
 	_friction = 0.98;
+	_bottomPlayerScore = 0;
+	_topPlayerScore = 0;
 
     //////////////////////////////
     // 1. super init first
@@ -36,9 +38,9 @@ bool HockeyScene::init()
     _screenSize = CCDirector::sharedDirector()->getWinSize();
 
     // create court items
-    CCSprite * center_circle = CCSprite::create("circle.png");
-    center_circle->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.5));
-    this->addChild(center_circle);
+    _center_circle = CCSprite::create("circle.png");
+    _center_circle->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.5));
+    this->addChild(_center_circle);
     
     CCSprite * center_line = CCSprite::create("line.png");
     center_line->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.5));
@@ -64,27 +66,48 @@ bool HockeyScene::init()
     this->addChild(table_right);
 
     _table_bottom_right = CCSprite::create("table_bottom.png");
-    _table_bottom_right->setPosition(ccp(_screenSize.width + (center_circle->getContentSize().width * 0.5), _table_bottom_right->getContentSize().height * 0.5));
+    _table_bottom_right->setPosition(ccp(_screenSize.width + (_center_circle->getContentSize().width * 0.5), _table_bottom_right->getContentSize().height * 0.5));
     this->addChild(_table_bottom_right);
 
     CCSprite * table_bottom_left = CCSprite::create("table_bottom.png");
-    table_bottom_left->setPosition(ccp(- (center_circle->getContentSize().width * 0.5), table_bottom_left->getContentSize().height * 0.5));
+    table_bottom_left->setPosition(ccp(- (_center_circle->getContentSize().width * 0.5), table_bottom_left->getContentSize().height * 0.5));
     table_bottom_left->setScaleX(-1);
     this->addChild(table_bottom_left);
 
     CCSprite * table_top_right = CCSprite::create("table_bottom.png");
-    table_top_right->setPosition(ccp(_screenSize.width + (center_circle->getContentSize().width * 0.5), _screenSize.height - (table_top_right->getContentSize().height * 0.5)));
+    table_top_right->setPosition(ccp(_screenSize.width + (_center_circle->getContentSize().width * 0.5), _screenSize.height - (table_top_right->getContentSize().height * 0.5)));
     table_top_right->setScaleY(-1);
     this->addChild(table_top_right);
 
     CCSprite * table_top_left = CCSprite::create("table_bottom.png");
-    table_top_left->setPosition(ccp(- (center_circle->getContentSize().width * 0.5), _screenSize.height - (table_top_left->getContentSize().height * 0.5)));
+    table_top_left->setPosition(ccp(- (_center_circle->getContentSize().width * 0.5), _screenSize.height - (table_top_left->getContentSize().height * 0.5)));
     table_top_left->setScaleY(-1);
     table_top_left->setScaleX(-1);
     this->addChild(table_top_left);
 
 
-    // created players mallets
+    // add corners
+    CCSprite * corner_top_left = CCSprite::create("corner.png");
+    corner_top_left->setPosition(ccp((corner_top_left->getContentSize().width / 2), _screenSize.height - (corner_top_left->getContentSize().height / 2)));
+    this->addChild(corner_top_left);
+
+    CCSprite * corner_top_right = CCSprite::create("corner.png");
+    corner_top_right->setPosition(ccp(_screenSize.width - (corner_top_right->getContentSize().width / 2), _screenSize.height - (corner_top_right->getContentSize().height / 2)));
+    corner_top_right->setRotation(90);
+    this->addChild(corner_top_right);
+
+    CCSprite * corner_bottom_right = CCSprite::create("corner.png");
+    corner_bottom_right->setPosition(ccp(_screenSize.width - (corner_bottom_right->getContentSize().width / 2), (corner_bottom_right->getContentSize().height / 2)));
+    corner_bottom_right->setRotation(180);
+    this->addChild(corner_bottom_right);
+
+    CCSprite * corner_bottom_left = CCSprite::create("corner.png");
+    corner_bottom_left->setPosition(ccp((corner_bottom_left->getContentSize().width / 2), (corner_bottom_left->getContentSize().height / 2)));
+    corner_bottom_left->setRotation(270);
+    this->addChild(corner_bottom_left);
+
+
+    // create players mallets
     _topPlayer = VectorSprite::vectorSpriteWithFile("mallet.png");
     _topPlayer->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.75));
     this->addChild(_topPlayer);
@@ -126,7 +149,7 @@ void HockeyScene::ccTouchesBegan(CCSet* touches, CCEvent* event)
 			{
 				tap = touch->getLocation();
 
-				for(int j = 0; j < _playersNumber; j++)
+				for(short int j = 0; j < _playersNumber; j++)
 				{
 					player = (VectorSprite *) _players->objectAtIndex(j);
 
@@ -158,7 +181,7 @@ void HockeyScene::ccTouchesMoved(CCSet* touches, CCEvent* event)
 			{
 				tap = touch->getLocation();
 
-				for(int j = 0; j < _playersNumber; j++)
+				for(short int j = 0; j < _playersNumber; j++)
 				{
 					player = (VectorSprite *) _players->objectAtIndex(j);
 
@@ -185,7 +208,14 @@ void HockeyScene::ccTouchesMoved(CCSet* touches, CCEvent* event)
 
 							if(nextPos.y < (player->get_radius() + _table_bottom_right->getContentSize().height))
 							{
-								nextPos.y = player->get_radius() + _table_bottom_right->getContentSize().height;
+								if(nextPos.y < player->get_radius() && nextPos.x > (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() && nextPos.x < (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius())
+								{
+									nextPos.y = player->get_radius();
+								}
+								else
+								{
+									nextPos.y = player->get_radius() + _table_bottom_right->getContentSize().height;
+								}
 							}
 						}
 
@@ -198,7 +228,14 @@ void HockeyScene::ccTouchesMoved(CCSet* touches, CCEvent* event)
 
 							if(nextPos.y > _screenSize.height - _table_bottom_right->getContentSize().height - player->get_radius())
 							{
-								nextPos.y = _screenSize.height - _table_bottom_right->getContentSize().height - player->get_radius();
+								if(nextPos.y > _screenSize.height - player->get_radius() && nextPos.x > (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() && nextPos.x < (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius())
+								{
+									nextPos.y = _screenSize.height - player->get_radius();
+								}
+								else
+								{
+									nextPos.y = _screenSize.height - _table_bottom_right->getContentSize().height - player->get_radius();\
+								}
 							}
 						}
 
@@ -228,7 +265,7 @@ void HockeyScene::ccTouchesEnded(CCSet* touches, CCEvent* event)
 			{
 				tap = touch->getLocation();
 
-				for(int j = 0; j < _playersNumber; j++)
+				for(short int j = 0; j < _playersNumber; j++)
 				{
 					player = (VectorSprite *) _players->objectAtIndex(j);
 
@@ -249,24 +286,13 @@ void HockeyScene::update(float dt)
 	CCPoint puck_position = _puck->getPosition();
 	VectorSprite * player;
 
-	float puck_vector_length = ccpLength(_puck->getVector());
-
-	for(int j = 0; j < _players->count(); j++)
+	for(short int j = 0; j < _players->count(); j++)
 	{
 		player = (VectorSprite *) _players->objectAtIndex(j);
 
 		CCPoint player_position = player->getNextPos();
 
-		if(pow(player_position.x - puck_position.x,2) + pow(player_position.y - puck_position.y, 2) < pow(player->get_radius() + _puck->get_radius(), 2))
-		{
-			CCLog("collision player: %d", j);
-
-			// get the angle of center of puck and center of player
-			CCPoint angle_vector = ccp(_puck->getPositionX() - player_position.x, _puck->getPositionY() - player_position.y);
-
-			// multiply vector per vectors radio
-			_puck->setVector(ccpMult(angle_vector, (ccpLength(player->getVector()) + puck_vector_length) / 1.5/ ccpLength(angle_vector)));
-		}
+		puckCollisionVector(player_position, player->get_radius(), player->getVector());
 	}
 
 	_puck->setVector(ccpMult(_puck->getVector(), _friction));
@@ -274,6 +300,8 @@ void HockeyScene::update(float dt)
 	CCPoint puck_next_position = ccpAdd(_puck->getPosition(), _puck->getVector());
 
 	CCPoint current_puck_vector = _puck->getVector();
+
+	//detect and handle collisions with the side of the table
 
 	if(puck_next_position.x < _table_left->getContentSize().width + _puck->get_radius())
 	{
@@ -294,29 +322,94 @@ void HockeyScene::update(float dt)
 		}
 	}
 
-	if(puck_next_position.y < _table_bottom_right->getContentSize().height + _puck->get_radius())
+	if(puck_next_position.x < (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() - _table_bottom_right->getContentSize().height || puck_next_position.x > (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius() + _table_bottom_right->getContentSize().height)
 	{
-		puck_next_position.y = _table_bottom_right->getContentSize().height + _puck->get_radius();
-
-		if(current_puck_vector.y < 0)
+		if(puck_next_position.y < _table_bottom_right->getContentSize().height + _puck->get_radius() && puck_next_position.y > _puck->get_radius())
 		{
-			_puck->setVector(ccp(current_puck_vector.x, -current_puck_vector.y));
+			puck_next_position.y = _table_bottom_right->getContentSize().height + _puck->get_radius();
+
+			if(current_puck_vector.y < 0)
+			{
+				_puck->setVector(ccp(current_puck_vector.x, -current_puck_vector.y));
+			}
+		}
+		else if(puck_next_position.y > _screenSize.height -_table_bottom_right->getContentSize().height - _puck->get_radius() && puck_next_position.y < _screenSize.height - _puck->get_radius())
+		{
+			puck_next_position.y = _screenSize.height -_table_bottom_right->getContentSize().height - _puck->get_radius();
+
+			if(current_puck_vector.y > 0)
+			{
+				_puck->setVector(ccp(current_puck_vector.x, -current_puck_vector.y));
+			}
 		}
 	}
-	else if(puck_next_position.y > _screenSize.height -_table_bottom_right->getContentSize().height - _puck->get_radius())
-	{
-		puck_next_position.y = _screenSize.height -_table_bottom_right->getContentSize().height - _puck->get_radius();
 
-		if(current_puck_vector.y > 0)
+	// collisions with goal corners
+
+	// center points of the goal corners
+	CCPoint goal_bottom_left = ccp((_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) - _table_bottom_right->getContentSize().height, 0);
+	CCPoint goal_bottom_right = ccp((_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) + _table_bottom_right->getContentSize().height, 0);
+	CCPoint goal_top_left = ccp((_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) - _table_bottom_right->getContentSize().height, _screenSize.height);
+	CCPoint goal_top_right = ccp((_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) + _table_bottom_right->getContentSize().height, _screenSize.height);
+
+	if(puck_next_position.y < _table_bottom_right->getContentSize().height + _puck->get_radius())
+	{
+		if(puck_next_position.x < _screenSize.width / 2)
 		{
-			_puck->setVector(ccp(current_puck_vector.x, -current_puck_vector.y));
+			puckCollisionVector(goal_bottom_left, _table_bottom_right->getContentSize().height, CCPoint (0, 0));
+		}
+		else
+		{
+			puckCollisionVector(goal_bottom_right, _table_bottom_right->getContentSize().height, CCPoint (0, 0));
+		}
+	}
+	else if(puck_next_position.y > _screenSize.height - _table_bottom_right->getContentSize().height - _puck->get_radius())
+	{
+		if(puck_next_position.x < _screenSize.width / 2)
+		{
+			puckCollisionVector(goal_top_left, _table_bottom_right->getContentSize().height, CCPoint (0, 0));
+		}
+		else
+		{
+			puckCollisionVector(goal_top_right, _table_bottom_right->getContentSize().height, CCPoint (0, 0));
 		}
 	}
 
 	_puck->setPosition(puck_next_position);
 
+	if(_puck->getPositionY() < -_puck->get_radius())
+	{
+		playerScore(2);
+	}
+
+	if(_puck->getPositionY() > _screenSize.height + _puck->get_radius())
+	{
+		playerScore(1);
+	}
+
 	_bottomPlayer->setPosition(_bottomPlayer->getNextPos());
 	_topPlayer->setPosition(_topPlayer->getNextPos());
+}
+
+void HockeyScene::playerScore(short int player)
+{
+	if(player > 1)
+	{
+		_topPlayerScore++;
+	}
+	else
+	{
+		_bottomPlayerScore++;
+	}
+
+	CCLog("top: %d bottom: %d", _topPlayerScore, _bottomPlayerScore);
+
+	_puck->setVector(ccp(0, 0));
+
+	CCPoint center = ccp(_screenSize.width / 2, _screenSize.height / 2);
+
+	_puck->setNextPos(center);
+	_puck->setPosition(center);
 }
 
 HockeyScene::~HockeyScene()
@@ -331,4 +424,21 @@ void HockeyScene::menuCloseCallback(CCObject* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
+}
+
+void HockeyScene::puckCollisionVector(CCPoint objectCenter, float objectRadius, CCPoint objectVector)
+{
+	if(pow(objectCenter.x - _puck->getPositionX(),2) + pow(objectCenter.y - _puck->getPositionY(), 2) < pow(objectRadius + _puck->get_radius(), 2))
+	{
+		CCPoint current_puck_vector = _puck->getVector();
+
+		float puck_vector_force = sqrt(pow(objectVector.x, 2) + pow(objectVector.y, 2) + pow(current_puck_vector.x, 2) + pow(current_puck_vector.y, 2)) * 0.8;
+
+		float puck_vector_angle = atan2(_puck->getPositionY() - objectCenter.y, _puck->getPositionX() - objectCenter.x);
+
+		CCPoint new_puck_vector = ccp(puck_vector_force * cos(puck_vector_angle), puck_vector_force * sin(puck_vector_angle));
+
+		// multiply vector per vectors radio
+		_puck->setVector(new_puck_vector);
+	}
 }

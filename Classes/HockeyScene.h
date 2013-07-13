@@ -11,7 +11,7 @@ class HockeyScene : public cocos2d::CCLayerColor
 
 	VectorSprite * _puck;
 
-	int _playersNumber;
+	short int _playersNumber;
 
 	CCArray * _players;
 
@@ -19,10 +19,14 @@ class HockeyScene : public cocos2d::CCLayerColor
 
 	CCSprite * _table_bottom_right;
 	CCSprite * _table_left;
+	CCSprite * _center_circle;
 
 	bool _gamePaused;
 
 	float _friction;
+
+	short int _topPlayerScore;
+	short int _bottomPlayerScore;
 
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -40,6 +44,10 @@ public:
     ~HockeyScene(void);
 
     void update(float dt);
+
+    void playerScore(short int player);
+
+    void puckCollisionVector(CCPoint objectCenter, float objectRadius, CCPoint objectVector);
 
     virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
 
