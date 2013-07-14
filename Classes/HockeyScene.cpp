@@ -282,12 +282,19 @@ void HockeyScene::ccTouchesEnded(CCSet* touches, CCEvent* event)
 	}
 }
 
+/********************************************//**
+ *  Method that checks the position of mallets and puck and update the position and vectors
+ ***********************************************/
+
 void HockeyScene::update(float dt)
 {
-	// detect collision
+
 	CCPoint puck_position = _puck->getPosition();
 	VectorSprite * player;
 
+	/**
+	* detects collisions with mallets
+	*/
 	for(short int j = 0; j < _players->count(); j++)
 	{
 		player = (VectorSprite *) _players->objectAtIndex(j);
@@ -299,11 +306,12 @@ void HockeyScene::update(float dt)
 
 	_puck->setVector(ccpMult(_puck->getVector(), _friction));
 
+	/**
+	* detect and handle collisions with the sides of the table
+	*/
+
 	CCPoint puck_next_position = ccpAdd(_puck->getPosition(), _puck->getVector());
-
 	CCPoint current_puck_vector = _puck->getVector();
-
-	//detect and handle collisions with the side of the table
 
 	if(puck_next_position.x < _table_left->getContentSize().width + _puck->get_radius())
 	{
@@ -324,10 +332,18 @@ void HockeyScene::update(float dt)
 		}
 	}
 
+	/**
+	* detect and handle collisions with the sides of the goal
+	*/
+
 	if((puck_next_position.x < (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() || puck_next_position.x > (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius()) && (puck_next_position.y < 0 || puck_next_position.y > _screenSize.height))
 	{
-		_puck->setVector(ccp(current_puck_vector.x, -current_puck_vector.y));
+		_puck->setVector(ccp(-current_puck_vector.x, current_puck_vector.y));
 	}
+
+	/**
+	* detect and handle collisions with bottom and top of the table
+	*/
 
 	if(puck_next_position.x < (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() - _table_bottom_right->getContentSize().height || puck_next_position.x > (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius() + _table_bottom_right->getContentSize().height)
 	{
@@ -351,7 +367,9 @@ void HockeyScene::update(float dt)
 		}
 	}
 
-	// collisions with goal corners
+	/**
+	* detect and handle collisions with goal corners
+	*/
 
 	// center points of the goal corners
 	CCPoint goal_bottom_left = ccp((_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) - _table_bottom_right->getContentSize().height, 0);
@@ -382,7 +400,21 @@ void HockeyScene::update(float dt)
 		}
 	}
 
+	/**
+	* move puck to next position
+	*/
 	_puck->setPosition(puck_next_position);
+
+	/**
+	* move mallets to next position
+	*/
+
+	_bottomPlayer->setPosition(_bottomPlayer->getNextPos());
+	_topPlayer->setPosition(_topPlayer->getNextPos());
+
+	/**
+	* detect goals
+	*/
 
 	if(_puck->getPositionY() < -_puck->get_radius())
 	{
@@ -393,10 +425,14 @@ void HockeyScene::update(float dt)
 	{
 		playerScore(1);
 	}
-
-	_bottomPlayer->setPosition(_bottomPlayer->getNextPos());
-	_topPlayer->setPosition(_topPlayer->getNextPos());
 }
+
+/********************************************//**
+ *  Update player score
+ *  @param player int of the player
+ *  	0 -> bottom player
+ *  	1 -> top player
+ ***********************************************/
 
 void HockeyScene::playerScore(short int player)
 {
@@ -419,6 +455,10 @@ void HockeyScene::playerScore(short int player)
 	_puck->setPosition(center);
 }
 
+/********************************************//**
+ *  SCENE destructor
+ ***********************************************/
+
 HockeyScene::~HockeyScene()
 {
 	CC_SAFE_RELEASE(_players);
@@ -433,6 +473,10 @@ void HockeyScene::menuCloseCallback(CCObject* pSender)
 #endif
 }
 
+/********************************************//**
+ *  Detects the collision of circular object with the puck and changes the puck vector
+ ***********************************************/
+
 void HockeyScene::puckCollisionVector(CCPoint objectCenter, float objectRadius, CCPoint objectVector)
 {
 	if(pow(objectCenter.x - _puck->getPositionX(),2) + pow(objectCenter.y - _puck->getPositionY(), 2) < pow(objectRadius + _puck->get_radius(), 2))
@@ -443,11 +487,20 @@ void HockeyScene::puckCollisionVector(CCPoint objectCenter, float objectRadius, 
 
 		float puck_vector_angle = atan2(_puck->getPositionY() - objectCenter.y, _puck->getPositionX() - objectCenter.x);
 
-		//CCPoint new_puck_position = ccp(objectCenter.x + (cos(puck_vector_angle + PI) * (objectRadius + _puck->get_radius())),objectCenter.x + (sin(puck_vector_angle + PI) * (objectRadius + _puck->get_radius())));
+		/**
+		 *  check if object is a corner and dont let it overlap it
+		 */
 
-		//_puck->setPosition(new_puck_position);
+		if(objectCenter.y == 0 || objectCenter.y == _screenSize.height)
+		{
+			CCPoint new_puck_position = ccp(objectCenter.x + (sin(puck_vector_angle + PI) * (objectRadius + _puck->get_radius())), objectCenter.y + (cos(puck_vector_angle + PI) * (objectRadius + _puck->get_radius())));
+
+			_puck->setPosition(new_puck_position);
+		}
 
 		CCPoint new_puck_vector = ccp(puck_vector_force * cos(puck_vector_angle), puck_vector_force * sin(puck_vector_angle));
+
+		CCLog("puck vector angle: %f", puck_vector_angle * (180 / 3.1416));
 
 		// multiply vector per vectors radio
 		_puck->setVector(new_puck_vector);
