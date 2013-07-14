@@ -4,6 +4,8 @@
 using namespace cocos2d;
 using namespace CocosDenshion;
 
+static const float PI = 3.1416;
+
 CCScene* HockeyScene::scene()
 {
     // 'scene' is an autorelease object
@@ -322,9 +324,14 @@ void HockeyScene::update(float dt)
 		}
 	}
 
+	if((puck_next_position.x < (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() || puck_next_position.x > (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius()) && (puck_next_position.y < 0 || puck_next_position.y > _screenSize.height))
+	{
+		_puck->setVector(ccp(current_puck_vector.x, -current_puck_vector.y));
+	}
+
 	if(puck_next_position.x < (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() - _table_bottom_right->getContentSize().height || puck_next_position.x > (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius() + _table_bottom_right->getContentSize().height)
 	{
-		if(puck_next_position.y < _table_bottom_right->getContentSize().height + _puck->get_radius() && puck_next_position.y > _puck->get_radius())
+		if(puck_next_position.y < _table_bottom_right->getContentSize().height + _puck->get_radius())
 		{
 			puck_next_position.y = _table_bottom_right->getContentSize().height + _puck->get_radius();
 
@@ -333,7 +340,7 @@ void HockeyScene::update(float dt)
 				_puck->setVector(ccp(current_puck_vector.x, -current_puck_vector.y));
 			}
 		}
-		else if(puck_next_position.y > _screenSize.height -_table_bottom_right->getContentSize().height - _puck->get_radius() && puck_next_position.y < _screenSize.height - _puck->get_radius())
+		else if(puck_next_position.y > _screenSize.height -_table_bottom_right->getContentSize().height - _puck->get_radius())
 		{
 			puck_next_position.y = _screenSize.height -_table_bottom_right->getContentSize().height - _puck->get_radius();
 
@@ -435,6 +442,10 @@ void HockeyScene::puckCollisionVector(CCPoint objectCenter, float objectRadius, 
 		float puck_vector_force = sqrt(pow(objectVector.x, 2) + pow(objectVector.y, 2) + pow(current_puck_vector.x, 2) + pow(current_puck_vector.y, 2)) * 0.8;
 
 		float puck_vector_angle = atan2(_puck->getPositionY() - objectCenter.y, _puck->getPositionX() - objectCenter.x);
+
+		//CCPoint new_puck_position = ccp(objectCenter.x + (cos(puck_vector_angle + PI) * (objectRadius + _puck->get_radius())),objectCenter.x + (sin(puck_vector_angle + PI) * (objectRadius + _puck->get_radius())));
+
+		//_puck->setPosition(new_puck_position);
 
 		CCPoint new_puck_vector = ccp(puck_vector_force * cos(puck_vector_angle), puck_vector_force * sin(puck_vector_angle));
 
