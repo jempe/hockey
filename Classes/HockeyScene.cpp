@@ -56,6 +56,9 @@ bool HockeyScene::init()
     top_circle->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height));
     this->addChild(top_circle);
 
+    CCSprite * logo = CCSprite::create("jempe_logo.png");
+    logo->setPosition(ccp(_screenSize.width / 2, (_screenSize.height / 2) + (logo->getContentSize().height / 8)));
+    this->addChild(logo);
 
     //create table borders
     _table_left = CCSprite::create("table_side.png");
@@ -108,6 +111,16 @@ bool HockeyScene::init()
     corner_bottom_left->setRotation(270);
     this->addChild(corner_bottom_left);
 
+    // create score labels
+    _top_player_score = CCLabelTTF::create("0", "Clubland", 60);
+    _top_player_score->setPosition(ccp(_screenSize.width - 60, (_screenSize.height / 2) + 40));
+    _top_player_score->setColor(ccc3(255, 0, 0));
+    this->addChild(_top_player_score);
+
+    _bottom_player_score = CCLabelTTF::create("0", "Clubland", 60);
+    _bottom_player_score->setPosition(ccp(_screenSize.width - 60, (_screenSize.height / 2) - 40));
+    _bottom_player_score->setColor(ccc3(255, 0, 0));
+    this->addChild(_bottom_player_score);
 
     // create players mallets
     _topPlayer = VectorSprite::vectorSpriteWithFile("mallet.png");
@@ -242,7 +255,7 @@ void HockeyScene::ccTouchesMoved(CCSet* touches, CCEvent* event)
 						}
 
 						player->setNextPos(nextPos);
-						player->setVector(ccp(tap.x - player->getPositionX(), tap.y - player->getPositionY()));
+						player->setVector(ccp(nextPos.x - player->getPositionX(), nextPos.y - player->getPositionY()));
 					}
 				}
 			}
@@ -445,6 +458,18 @@ void HockeyScene::playerScore(short int player)
 		_bottomPlayerScore++;
 	}
 
+	/**
+	 *  display score
+	 */
+
+	char score[10];
+
+	sprintf(score,"%d", _topPlayerScore);
+	_top_player_score->setString(score);
+
+	sprintf(score,"%d", _bottomPlayerScore);
+	_bottom_player_score->setString(score);
+
 	CCLog("top: %d bottom: %d", _topPlayerScore, _bottomPlayerScore);
 
 	_puck->setVector(ccp(0, 0));
@@ -483,7 +508,7 @@ void HockeyScene::puckCollisionVector(CCPoint objectCenter, float objectRadius, 
 	{
 		CCPoint current_puck_vector = _puck->getVector();
 
-		float puck_vector_force = sqrt(pow(objectVector.x, 2) + pow(objectVector.y, 2) + pow(current_puck_vector.x, 2) + pow(current_puck_vector.y, 2)) * 0.8;
+		float puck_vector_force = sqrt(pow(objectVector.x, 2) + pow(objectVector.y, 2) + pow(current_puck_vector.x, 2) + pow(current_puck_vector.y, 2)) * _friction;
 
 		float puck_vector_angle = atan2(_puck->getPositionY() - objectCenter.y, _puck->getPositionX() - objectCenter.x);
 
@@ -499,8 +524,6 @@ void HockeyScene::puckCollisionVector(CCPoint objectCenter, float objectRadius, 
 		}
 
 		CCPoint new_puck_vector = ccp(puck_vector_force * cos(puck_vector_angle), puck_vector_force * sin(puck_vector_angle));
-
-		CCLog("puck vector angle: %f", puck_vector_angle * (180 / 3.1416));
 
 		// multiply vector per vectors radio
 		_puck->setVector(new_puck_vector);

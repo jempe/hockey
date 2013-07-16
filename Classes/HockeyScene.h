@@ -21,6 +21,9 @@ class HockeyScene : public cocos2d::CCLayerColor
 	CCSprite * _table_left;
 	CCSprite * _center_circle;
 
+	CCLabelTTF * _top_player_score;
+	CCLabelTTF * _bottom_player_score;
+
 	bool _gamePaused;
 
 	float _friction;
