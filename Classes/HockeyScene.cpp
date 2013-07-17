@@ -71,21 +71,21 @@ bool HockeyScene::init()
     this->addChild(table_right);
 
     _table_bottom_right = CCSprite::create("table_bottom.png");
-    _table_bottom_right->setPosition(ccp(_screenSize.width + (_center_circle->getContentSize().width * 0.5), _table_bottom_right->getContentSize().height * 0.5));
+    _table_bottom_right->setPosition(ccp(_screenSize.width + ((_table_bottom_right->getContentSize().width - _screenSize.width) / 2) + (_center_circle->getContentSize().width * 0.5), _table_bottom_right->getContentSize().height * 0.5));
     this->addChild(_table_bottom_right);
 
     CCSprite * table_bottom_left = CCSprite::create("table_bottom.png");
-    table_bottom_left->setPosition(ccp(- (_center_circle->getContentSize().width * 0.5), table_bottom_left->getContentSize().height * 0.5));
+    table_bottom_left->setPosition(ccp(- ((_table_bottom_right->getContentSize().width - _screenSize.width) / 2) - (_center_circle->getContentSize().width * 0.5), table_bottom_left->getContentSize().height * 0.5));
     table_bottom_left->setScaleX(-1);
     this->addChild(table_bottom_left);
 
     CCSprite * table_top_right = CCSprite::create("table_bottom.png");
-    table_top_right->setPosition(ccp(_screenSize.width + (_center_circle->getContentSize().width * 0.5), _screenSize.height - (table_top_right->getContentSize().height * 0.5)));
+    table_top_right->setPosition(ccp(_screenSize.width + ((_table_bottom_right->getContentSize().width - _screenSize.width) / 2) + (_center_circle->getContentSize().width * 0.5), _screenSize.height - (table_top_right->getContentSize().height * 0.5)));
     table_top_right->setScaleY(-1);
     this->addChild(table_top_right);
 
     CCSprite * table_top_left = CCSprite::create("table_bottom.png");
-    table_top_left->setPosition(ccp(- (_center_circle->getContentSize().width * 0.5), _screenSize.height - (table_top_left->getContentSize().height * 0.5)));
+    table_top_left->setPosition(ccp(- ((_table_bottom_right->getContentSize().width - _screenSize.width) / 2) - (_center_circle->getContentSize().width * 0.5), _screenSize.height - (table_top_left->getContentSize().height * 0.5)));
     table_top_left->setScaleY(-1);
     table_top_left->setScaleX(-1);
     this->addChild(table_top_left);
@@ -111,14 +111,16 @@ bool HockeyScene::init()
     corner_bottom_left->setRotation(270);
     this->addChild(corner_bottom_left);
 
+    // 30 for small screens, 60 for medium screens
+
     // create score labels
-    _top_player_score = CCLabelTTF::create("0", "Clubland", 60);
-    _top_player_score->setPosition(ccp(_screenSize.width - 60, (_screenSize.height / 2) + 40));
+    _top_player_score = CCLabelTTF::create("0", "Clubland", 30);
+    _top_player_score->setPosition(ccp(_screenSize.width - 30, (_screenSize.height / 2) + 20));
     _top_player_score->setColor(ccc3(255, 0, 0));
     this->addChild(_top_player_score);
 
-    _bottom_player_score = CCLabelTTF::create("0", "Clubland", 60);
-    _bottom_player_score->setPosition(ccp(_screenSize.width - 60, (_screenSize.height / 2) - 40));
+    _bottom_player_score = CCLabelTTF::create("0", "Clubland", 30);
+    _bottom_player_score->setPosition(ccp(_screenSize.width - 30, (_screenSize.height / 2) - 20));
     _bottom_player_score->setColor(ccc3(255, 0, 0));
     this->addChild(_bottom_player_score);
 
@@ -449,13 +451,17 @@ void HockeyScene::update(float dt)
 
 void HockeyScene::playerScore(short int player)
 {
+	CCPoint center;
+
 	if(player > 1)
 	{
 		_topPlayerScore++;
+		center = ccp(_screenSize.width / 2, _screenSize.height / 2 + _puck->get_radius());
 	}
 	else
 	{
 		_bottomPlayerScore++;
+		center = ccp(_screenSize.width / 2, _screenSize.height / 2 - _puck->get_radius());
 	}
 
 	/**
@@ -474,10 +480,21 @@ void HockeyScene::playerScore(short int player)
 
 	_puck->setVector(ccp(0, 0));
 
-	CCPoint center = ccp(_screenSize.width / 2, _screenSize.height / 2);
-
 	_puck->setNextPos(center);
 	_puck->setPosition(center);
+
+	CCPoint top_player_pos = ccp(_screenSize.width / 2, (_screenSize.height * 3) / 4);
+	CCPoint bottom_player_pos = ccp(_screenSize.width / 2, _screenSize.height / 4);
+
+	_topPlayer->setPosition(top_player_pos);
+	_topPlayer->setNextPos(top_player_pos);
+	_topPlayer->setTouch(NULL);
+
+	_bottomPlayer->setPosition(bottom_player_pos);
+	_bottomPlayer->setNextPos(bottom_player_pos);
+	_bottomPlayer->setTouch(NULL);
+
+
 }
 
 /********************************************//**
