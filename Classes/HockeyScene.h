@@ -31,6 +31,9 @@ class HockeyScene : public cocos2d::CCLayerColor
 	short int _topPlayerScore;
 	short int _bottomPlayerScore;
 
+	short int _computer_player_level;
+	float _computer_mallet_speed;
+
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();  
@@ -51,6 +54,10 @@ public:
     void playerScore(short int player);
 
     void puckCollisionVector(CCPoint objectCenter, float objectRadius, CCPoint objectVector);
+
+    CCPoint computerMalletPosition();
+
+    CCPoint keepMalletInsideCourt(int player_id, CCPoint malletPosition);
 
     virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
 

@@ -25,10 +25,11 @@ CCScene* HockeyScene::scene()
 bool HockeyScene::init()
 {
 	_gamePaused = false;
-	_playersNumber = 2;
+	_playersNumber = 1;
 	_friction = 0.98;
 	_bottomPlayerScore = 0;
 	_topPlayerScore = 0;
+	_computer_player_level = 1;
 
     //////////////////////////////
     // 1. super init first
@@ -133,9 +134,10 @@ bool HockeyScene::init()
     _bottomPlayer->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.25));
     this->addChild(_bottomPlayer);
 
+    _computer_mallet_speed = _topPlayer->get_radius() / 18;
+
     _players = CCArray::create(_bottomPlayer, _topPlayer, NULL);
     _players->retain();
-
 
     // create puck
     _puck = VectorSprite::vectorSpriteWithFile("puck.png");
@@ -206,55 +208,7 @@ void HockeyScene::ccTouchesMoved(CCSet* touches, CCEvent* event)
 					{
 						CCPoint nextPos = tap;
 
-						if(nextPos.x < _table_left->getContentSize().width + player->get_radius())
-						{
-							nextPos.x = _table_left->getContentSize().width + player->get_radius();
-						}
-
-						if(nextPos.x > _screenSize.width - _table_left->getContentSize().width - player->get_radius())
-						{
-							nextPos.x = _screenSize.width - _table_left->getContentSize().width - player->get_radius();
-						}
-
-						if(j == 0)
-						{
-							if(nextPos.y > (_screenSize.height / 2) - player->get_radius())
-							{
-								nextPos.y = (_screenSize.height / 2) - player->get_radius();
-							}
-
-							if(nextPos.y < (player->get_radius() + _table_bottom_right->getContentSize().height))
-							{
-								if(nextPos.y < player->get_radius() && nextPos.x > (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() && nextPos.x < (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius())
-								{
-									nextPos.y = player->get_radius();
-								}
-								else
-								{
-									nextPos.y = player->get_radius() + _table_bottom_right->getContentSize().height;
-								}
-							}
-						}
-
-						if(j == 1)
-						{
-							if(nextPos.y < (_screenSize.height / 2) + player->get_radius())
-							{
-								nextPos.y = (_screenSize.height / 2) + player->get_radius();
-							}
-
-							if(nextPos.y > _screenSize.height - _table_bottom_right->getContentSize().height - player->get_radius())
-							{
-								if(nextPos.y > _screenSize.height - player->get_radius() && nextPos.x > (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() && nextPos.x < (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius())
-								{
-									nextPos.y = _screenSize.height - player->get_radius();
-								}
-								else
-								{
-									nextPos.y = _screenSize.height - _table_bottom_right->getContentSize().height - player->get_radius();\
-								}
-							}
-						}
+						nextPos = keepMalletInsideCourt(j, nextPos);
 
 						player->setNextPos(nextPos);
 						player->setVector(ccp(nextPos.x - player->getPositionX(), nextPos.y - player->getPositionY()));
@@ -425,7 +379,17 @@ void HockeyScene::update(float dt)
 	*/
 
 	_bottomPlayer->setPosition(_bottomPlayer->getNextPos());
-	_topPlayer->setPosition(_topPlayer->getNextPos());
+
+	if(_playersNumber > 1)
+	{
+		_topPlayer->setPosition(_topPlayer->getNextPos());
+	}
+	else
+	{
+		CCPoint next_computer_mallet_position = computerMalletPosition();
+
+		_topPlayer->setPosition(next_computer_mallet_position);
+	}
 
 	/**
 	* detect goals
@@ -440,6 +404,57 @@ void HockeyScene::update(float dt)
 	{
 		playerScore(1);
 	}
+}
+/********************************************//**
+ *  AI for computer mallet
+ ***********************************************/
+CCPoint HockeyScene::computerMalletPosition()
+{
+	CCPoint mallet_position = _topPlayer->getPosition();
+
+	if(_puck->getPositionY() > _screenSize.height / 2)
+	{
+		if(pow(mallet_position.x - _puck->getPositionX(),2) + pow(mallet_position.y - _puck->getPositionY(), 2) < pow(_topPlayer->get_radius() + _puck->get_radius(), 2))
+		{
+
+		}
+		else
+		{
+			if(abs(mallet_position.x - _puck->getPositionX()) > _computer_mallet_speed)
+			{
+				if(mallet_position.x > _puck->getPositionX())
+				{
+					mallet_position.x -= _computer_mallet_speed;
+				}
+				else
+				{
+					mallet_position.x += _computer_mallet_speed;
+				}
+			}
+			if(abs(mallet_position.y - _puck->getPositionY()) > _computer_mallet_speed)
+			{
+				if(mallet_position.y > _puck->getPositionY())
+				{
+					mallet_position.y -= _computer_mallet_speed;
+				}
+				else
+				{
+					mallet_position.y += _computer_mallet_speed;
+				}
+			}
+		}
+	}
+	else
+	{
+		float return_speed = 15;
+
+		mallet_position.x += ((_screenSize.width / 2) - mallet_position.x) / return_speed;
+		mallet_position.y += ((_screenSize.height * 0.75) - mallet_position.y) / return_speed;
+	}
+
+	mallet_position = keepMalletInsideCourt(1, mallet_position);
+
+	return mallet_position;
 }
 
 /********************************************//**
@@ -513,6 +528,69 @@ void HockeyScene::menuCloseCallback(CCObject* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
+}
+
+/********************************************//**
+ *  keep the mallet inside the court
+ *  @param player_id int of the player
+ *  	0 -> bottom player
+ *  	1 -> top player
+ *  @param malletPosition coordinates of the requested mallet position
+ ***********************************************/
+
+CCPoint HockeyScene::keepMalletInsideCourt(int player_id, CCPoint malletPosition)
+{
+	if(malletPosition.x < _table_left->getContentSize().width + _topPlayer->get_radius())
+	{
+		malletPosition.x = _table_left->getContentSize().width + _topPlayer->get_radius();
+	}
+
+	if(malletPosition.x > _screenSize.width - _table_left->getContentSize().width - _topPlayer->get_radius())
+	{
+		malletPosition.x = _screenSize.width - _table_left->getContentSize().width - _topPlayer->get_radius();
+	}
+
+	if(player_id == 0)
+	{
+		if(malletPosition.y > (_screenSize.height / 2) - _topPlayer->get_radius())
+		{
+			malletPosition.y = (_screenSize.height / 2) - _topPlayer->get_radius();
+		}
+
+		if(malletPosition.y < (_topPlayer->get_radius() + _table_bottom_right->getContentSize().height))
+		{
+			if(malletPosition.y < _topPlayer->get_radius() && malletPosition.x > (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() && malletPosition.x < (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius())
+			{
+				malletPosition.y = _topPlayer->get_radius();
+			}
+			else
+			{
+				malletPosition.y = _topPlayer->get_radius() + _table_bottom_right->getContentSize().height;
+			}
+		}
+	}
+
+	if(player_id == 1)
+	{
+		if(malletPosition.y < (_screenSize.height / 2) + _topPlayer->get_radius())
+		{
+			malletPosition.y = (_screenSize.height / 2) + _topPlayer->get_radius();
+		}
+
+		if(malletPosition.y > _screenSize.height - _table_bottom_right->getContentSize().height - _topPlayer->get_radius())
+		{
+			if(malletPosition.y > _screenSize.height - _topPlayer->get_radius() && malletPosition.x > (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() && malletPosition.x < (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius())
+			{
+				malletPosition.y = _screenSize.height - _topPlayer->get_radius();
+			}
+			else
+			{
+				malletPosition.y = _screenSize.height - _table_bottom_right->getContentSize().height - _topPlayer->get_radius();
+			}
+		}
+	}
+
+	return malletPosition;
 }
 
 /********************************************//**
